@@ -47,6 +47,42 @@ pipeline {
                 
          
         }
+
+  stage("docker image"){
+            steps {
+                script{
+                    sh 'docker build -t devops-integration .'
+                   
+                   
+                    sh'docker tag devops-integration ayman24051999/devops-integration'
+
+                }
+               
+            }
+           
+        }
+       
+        stage("docker compose"){
+            steps{
+                script{
+                   
+                    sh'docker-compose build'
+                    sh'docker-compose up -d'
+                }
+            }
+        }
+        stage("push image to dockerhub"){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerpassword')]) {
+                        sh 'docker login -u ayman24051999 -p ${dockerpassword}'
+                       
+                        }
+                        sh'docker push ayman24051999/devops-integration'
+                       
+                    }
+            }
+        }
      
     stage("angular "){
               steps {
