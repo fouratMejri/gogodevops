@@ -8,4 +8,4 @@ WORKDIR /app
 COPY target/your-app.jar your-app.jar
 
 # Define the command to run when the container starts
-CMD ["java", "-jar", "your-app.jar"]
+CMD ["java", "-jar", "fourat.jar"]
